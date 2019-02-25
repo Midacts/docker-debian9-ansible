@@ -11,12 +11,12 @@ jobs:
     - stage: Build docker image
       script:
       # Build the Dockerfile
-      - docker build -t docker-ansible .
+      - docker build -t docker-debian9-ansible .
 
     - stage: Test the docker image
       script:
       # Test running the container
-      - docker run --name test-container -d --privileged -v /var/run/docker.sock:/var/run/docker.sock docker-ansible
+      - docker run --name test-container -d --privileged -v /var/run/docker.sock:/var/run/docker.sock docker-debian9-ansible
 
       # Verifies Docker is installed
       - docker exec --tty test-container env TERM=xterm docker --version
@@ -37,5 +37,5 @@ jobs:
       script:
       # Pushes the docker image to Docker Hub
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-      - docker tag docker-ansible $DOCKER_USERNAME/docker-ansible
-      - docker push $DOCKER_USERNAME/docker-ansible
+      - docker tag docker-debian9-ansible $DOCKER_USERNAME/docker-debian9-ansible:latest
+      - docker push $DOCKER_USERNAME/docker-debian9-ansible:latest
