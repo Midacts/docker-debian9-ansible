@@ -8,13 +8,11 @@ before_install:
 
 jobs:
   include:
-    - stage: Build docker image
+    - stage: Build/Test/Push the docker image
       script:
       # Build the Dockerfile
       - docker build -t docker-debian9-ansible .
 
-    - stage: Test the docker image
-      script:
       # Test running the container
       - docker run --name test-container -d --privileged -v /var/run/docker.sock:/var/run/docker.sock docker-debian9-ansible
 
@@ -33,8 +31,6 @@ jobs:
       # Verifies virtualenv is installed
       - docker exec --tty test-container env TERM=xterm virtualenv --version
 
-    - stage: Pushes the latest docker image
-      script:
       # Pushes the docker image to Docker Hub
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
       - docker tag docker-debian9-ansible $DOCKER_USERNAME/docker-debian9-ansible:latest
