@@ -8,7 +8,7 @@ RUN apt-get update \
        apt-transport-https build-essential ca-certificates curl \
        gnupg2 libffi-dev libssl-dev nano \
        python-pip python-dev python-setuptools python-wheel \
-       software-properties-common sudo systemd \ 
+       software-properties-common sudo systemd
 
 # Docker prereq
 RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
